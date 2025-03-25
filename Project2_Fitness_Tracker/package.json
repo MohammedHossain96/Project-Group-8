@@ -6,8 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "start": "npm run build && node dist/server.js --ignore client",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "migrate": "npx sequelize-cli db:migrate",
+    "seed": "node dist/seeds/index.js"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -24,6 +27,7 @@
     "globals": "^15.14.0",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.22.0",
-    "vite": "^6.1.0"
+    "vite": "^6.1.0",
+    "sequelize": "^6.37.3"
   }
 }
