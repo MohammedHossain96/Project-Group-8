@@ -9,6 +9,7 @@
     "skipLibCheck": true,
 
     /* JavaScript Support */
+    "jsx": "react-jsx" /* Specify the JSX code generation mode. 'react-jsx' for the new JSX transform, or 'react' for the classic. */,
     "allowJs": true /* Allow JavaScript files to be a part of your program. Use the 'checkJS' option to get errors from these files. */,
     "checkJs": true /* Enable error reporting in type-checked JavaScript files. */,
 
