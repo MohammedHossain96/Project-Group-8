@@ -1,21 +1,264 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Base styles */
+:root {
+  --primary-color: #1e5631; /* Slightly brighter green */
+  --secondary-color: #0e3b6b; /* Slightly brighter blue */
+  --accent-color: #4a6d8c; /* Brighter slate blue accent */
+  --accent-highlight: #5d89b3; /* Highlight accent for pop */
+  --dark-color: #1a1a1a; /* Slightly lighter rich black */
+  --text-color: #e0e0e0; /* Light gray instead of pure white */
+  --glass-bg: rgba(25, 25, 25, 0.6); /* Slightly lighter glass background */
+  --glass-border: rgba(80, 80, 80, 0.2); /* Slightly lighter glass border */
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Deeper shadows */
 }
 
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  min-height: 100vh;
+}
+
+/* Gradient animation */
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+html {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  padding-top: 0px;
+  min-height: 100vh;
+  width: 100%;
+  /* Updated gradient with more vibrant colors and better contrast */
+  background: linear-gradient(-45deg, 
+    var(--primary-color), 
+    var(--secondary-color), 
+    var(--accent-highlight),
+    var(--dark-color));
+  background-size: 300% 300%; /* Larger size for more subtle transitions */
+  animation: gradientAnimation 25s ease infinite; /* Slower animation for subtlety */
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Glass effect for cards */
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-shadow);
+  margin-bottom: 20px;
+  overflow: hidden;
+  color: var(--text-color);
+}
+
+.card-content {
+  padding: 24px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  display: block;
+  color: var(--text-color);
+}
+
+/* Form elements */
+input, select, textarea, button {
+  background: rgba(30, 30, 30, 0.6); /* Darker input backgrounds */
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text-color);
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(58, 80, 107, 0.3); /* Accent color shadow */
+}
+
+/* Button styles */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(30, 30, 30, 0.7); /* Darker button background */
+  color: var(--text-color);
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.btn:hover {
+  background: rgba(50, 50, 50, 0.8); /* Darker hover state */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Darker shadow */
+}
+
+.btn.green {
+  background: rgba(15, 58, 19, 0.7); /* Darker green */
+}
+
+.btn.green:hover {
+  background: rgba(15, 58, 19, 0.9);
+}
+
+.btn.red {
+  background: rgba(121, 33, 27, 0.7); /* Darker red */
+}
+
+.btn.red:hover {
+  background: rgba(121, 33, 27, 0.9);
+}
+
+.btn.blue {
+  background: rgba(7, 33, 64, 0.7); /* Darker blue */
+}
+
+.btn.blue:hover {
+  background: rgba(7, 33, 64, 0.9);
+}
+
+/* Navbar link specific styles */
+.nav-link {
+  color: #e0e0e0; /* Light gray instead of pure white */
+  text-decoration: none;
+  font-weight: 500;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  padding: 0px 2px;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  color: #ffffff; /* Pure white on hover for contrast */
+}
+
+/* Utility classes */
+.flow-text {
+  font-size: 2rem;
+  font-weight: 300;
+  margin: 16px 0;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.red-text {
+  color: #ff8a80;
+}
+
+.green-text {
+  color: #b9f6ca;
+}
+
+.mt-3 {
+  margin-top: 16px;
+}
+
+/* Row and column layout */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col {
+  flex: 1;
+  padding: 0 15px;
+}
+
+.col.s6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.col.s12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .col.m4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+  
+  .col.m6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+/* Section */
+.section {
+  padding: 20px 0;
+}
+
+/* Adjust text shadow for better readability on gradient */
+h1, h2, h3, h4, h5, h6 {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Adjust link colors for better visibility on dark background */
+a {
+  color: #90caf9;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #bbdefb;
+}
+
+/* Logo */
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em rgba(255, 255, 255, 0.7));
 }
+
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em rgba(97, 218, 251, 0.7));
 }
 
 @keyframes logo-spin {
@@ -33,10 +276,6 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
 .read-the-docs {
-  color: #888;
+  color: rgba(255, 255, 255, 0.6);
 }
