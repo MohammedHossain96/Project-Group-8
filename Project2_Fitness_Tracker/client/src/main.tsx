@@ -3,10 +3,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App';
-import MainPage from './pages/MainPage'; // Ensure this file exists at the specified path
-import ErrorPage from './pages/ErrorPage'; // Ensure this file exists at the specified path
+import MainPage from './pages/MainPage';
+import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
-import CreateUser from './pages/CreateUser'; // Import CreateUser component
+import CreateUser from './pages/CreateUser';
 
 const router = createBrowserRouter([
   {
@@ -16,18 +16,18 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainPage />,
+        element: <Login />, // Show the Login page by default
       },
       {
-        path: '/login',
-        element: <Login />,
+        path: '/main',
+        element: <MainPage />, // MainPage is now at /main
       },
       {
-        path: '/createuser', // New route for CreateUser
-        element: <CreateUser />, // Import and use CreateUser component
-      }
+        path: '/createuser',
+        element: <CreateUser />,
+      },
     ],
-  }
+  },
 ]);
 
 const rootElement = document.getElementById('root');

@@ -46,4 +46,20 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+class Auth {
+  static login(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  static logout() {
+    localStorage.removeItem('token');
+  }
+
+  static loggedIn() {
+    const token = localStorage.getItem('token');
+    // Add logic to validate the token if needed
+    return !!token;
+  }
+}
+
+export default Auth;
