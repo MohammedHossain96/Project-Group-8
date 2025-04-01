@@ -3,10 +3,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App';
-
-import ErrorPage from './pages/ErrorPage.tsx';
-import Home from './pages/Home.tsx';
-import Login from './pages/Login.tsx';
+import MainPage from './pages/MainPage'; // Ensure this file exists at the specified path
+import ErrorPage from './pages/ErrorPage'; // Ensure this file exists at the specified path
+import Login from './pages/Login';
+import CreateUser from './pages/CreateUser'; // Import CreateUser component
 
 const router = createBrowserRouter([
   {
@@ -16,14 +16,18 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <MainPage />,
       },
       {
         path: '/login',
         element: <Login />,
       },
+      {
+        path: '/createuser', // New route for CreateUser
+        element: <CreateUser />, // Import and use CreateUser component
+      }
     ],
-  },
+  }
 ]);
 
 const rootElement = document.getElementById('root');
