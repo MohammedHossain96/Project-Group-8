@@ -1,5 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link for navigation
 import Auth from '../utils/auth';
 import { login } from '../api/authAPI';
 
@@ -49,6 +49,14 @@ const Login = () => {
         />
         <button type="submit">Login</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+        {/* Add the message and hyperlink */}
+        <p>
+          Don't have an account?{' '}
+          <Link to="/createuser" className="register-link">
+            Register here
+          </Link>
+        </p>
       </form>
     </div>
   );

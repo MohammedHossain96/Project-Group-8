@@ -33,13 +33,13 @@ const createUser = async (userInfo: UserLogin) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Registration failed: ${response.statusText}`); // Fixed error message
+      throw new Error(`Registration failed: ${response.statusText}`);
     }
 
     const data = await response.json();
     return data; // This will include the token if the registration is successful
   } catch (error) {
-    console.error('Error during registration:', error); // Fixed message here
+    console.error('Error during registration:', error);
     throw error;
   }
 };

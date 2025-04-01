@@ -1,20 +1,25 @@
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
-class AuthService {
-  getProfile() {
-    // Return the decoded token
+class Auth {
+  // Retrieve the token from localStorage
+  static getToken(): string | null {
+    return localStorage.getItem('id_token');
+  }
+
+  // Decode the token to get the user's profile
+  static getProfile() {
     const token = this.getToken();
     return token ? jwtDecode<JwtPayload>(token) : null;
   }
 
-  loggedIn() {
-    // Check if the user is logged in by verifying the token exists and is not expired
+  // Check if the user is logged in by verifying the token exists and is not expired
+  static loggedIn(): boolean {
     const token = this.getToken();
     return !!token && !this.isTokenExpired(token);
   }
-  
-  isTokenExpired(token: string) {
-    // Check if the token is expired
+
+  // Check if the token is expired
+  static isTokenExpired(token: string): boolean {
     try {
       const decoded = jwtDecode<JwtPayload>(token);
       if (!decoded.exp) {
@@ -28,37 +33,16 @@ class AuthService {
     }
   }
 
-  getToken(): string {
-    // Retrieve the token from localStorage
-    return localStorage.getItem('id_token') || '';
-  }
-
-  login(idToken: string) {
-    // Save the token to localStorage and redirect to the home page
+  // Save the token to localStorage and redirect to the main page
+  static login(idToken: string): void {
     localStorage.setItem('id_token', idToken);
-    window.location.assign('/'); // Redirect to the home page
+    window.location.assign('/main'); // Redirect to the main page
   }
 
-  logout() {
-    // Remove the token from localStorage and redirect to the login page
+  // Remove the token from localStorage and redirect to the login page
+  static logout(): void {
     localStorage.removeItem('id_token');
     window.location.assign('/login'); // Redirect to the login page
-  }
-}
-
-class Auth {
-  static login(token: string) {
-    localStorage.setItem('token', token);
-  }
-
-  static logout() {
-    localStorage.removeItem('token');
-  }
-
-  static loggedIn() {
-    const token = localStorage.getItem('token');
-    // Add logic to validate the token if needed
-    return !!token;
   }
 }
 
