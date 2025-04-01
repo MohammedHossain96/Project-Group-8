@@ -1,13 +1,36 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App'; // Import without extension - TypeScript will resolve it
-// Removed index.css import
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>,
-);
+import App from './App';
+import MainPage from './pages/MainPage'; // Ensure this file exists at the specified path
+import ErrorPage from './pages/ErrorPage'; // Ensure this file exists at the specified path
+import Login from './pages/Login';
+import CreateUser from './pages/CreateUser'; // Import CreateUser component
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <MainPage />,
+      },
+      {
+        path: '/login',
+        element: <Login />,
+      },
+      {
+        path: '/createuser', // New route for CreateUser
+        element: <CreateUser />, // Import and use CreateUser component
+      }
+    ],
+  }
+]);
+
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+}
