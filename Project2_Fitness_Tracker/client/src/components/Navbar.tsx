@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import auth from '../utils/auth';
 
 const Navbar = () => {
   const [loginCheck, setLoginCheck] = useState(false);
+  const location = useLocation(); // Get the current route
 
   useEffect(() => {
     // Check if the user is logged in and update the state
@@ -18,22 +19,23 @@ const Navbar = () => {
   return (
     <div className="nav">
       <div className="nav-title">
-        <Link to="/">Fitness Tracker</Link>
+        <span>Fitness Tracker</span>
       </div>
       <ul>
-        {!loginCheck ? (
+        {/* Conditionally render the Login link */}
+        {!loginCheck && location.pathname !== '/login' && location.pathname !== '/main' ? (
           <li className="nav-item">
-            <button type="button">
-              <Link to="/login">Login</Link>
-            </button>
+            <Link to="/login" className="nav-link">
+              Login
+            </Link>
           </li>
-        ) : (
+        ) : loginCheck ? (
           <li className="nav-item">
             <button type="button" onClick={handleLogout}>
               Logout
             </button>
           </li>
-        )}
+        ) : null}
       </ul>
     </div>
   );
