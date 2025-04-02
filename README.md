@@ -37,7 +37,7 @@ living a healthy life.
 
 * Use the link in the github
 
-                    OR
+  OR
 
 * Use the deployed link.
 
@@ -45,7 +45,7 @@ living a healthy life.
 
 You access through the link provided below. 
 
-    Live: https://fitness-tracker-7xzr.onrender.com
+    https://fitness-tracker-7xzr.onrender.com
    
 ## Usage
 
