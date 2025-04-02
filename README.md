@@ -2,6 +2,8 @@
 
 ##  Getting Started
 
+<img src="Project2_Fitness_Tracker\client\src\assets\READMEImage.png" alt="screenshot" />
+
 ## Table of Contents
   - [Description](#description)
   - [User Story](#user-story)
@@ -35,7 +37,7 @@ living a healthy life.
 
 * Use the link in the github
 
-                    OR
+  OR
 
 * Use the deployed link.
 
@@ -43,7 +45,7 @@ living a healthy life.
 
 You access through the link provided below. 
 
-    Live: (this is where our deployment link goes once deployed.)
+    https://fitness-tracker-7xzr.onrender.com
    
 ## Usage
 
@@ -78,7 +80,7 @@ Fitness Tracker is used to mark how far you've run (km), how much you lift(lbs),
 
 
 ## Future-Development-Goals
-
+ * adding features for a friends list for competition and collaboration.
 
 ## Contributing
 
@@ -114,6 +116,6 @@ Fitness Tracker is used to mark how far you've run (km), how much you lift(lbs),
   * Then my workout values are logged,
   * And if any badges are reached it will award me.
 
-  ## questions
+  ## Questions
 
   Any questions? reach out via smoke signal on a clear night.
