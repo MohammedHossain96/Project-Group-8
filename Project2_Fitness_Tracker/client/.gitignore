@@ -59,10 +59,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-*dist
-*node_modules
-*package-lock.json
-*.env
+
 
 # Logs
 logs
@@ -99,5 +96,4 @@ tmp
 # Environment variables file
 .env
 # Ignore coverage reports
-coverage
 
