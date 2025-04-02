@@ -32,10 +32,39 @@ export const login = async (req: Request, res: Response) => {
   return res.json({ token });  // Send the token as a JSON response
 };
 
+// Register function to create a new user
+export const register = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+
+  try {
+    // Check if the username already exists
+    const existingUser = await User.findOne({ where: { username } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Username already exists' });
+    }
+
+    // Hash the password and create the user
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({ username, password: hashedPassword });
+
+    // Generate a JWT token for the new user
+    const secretKey = process.env.JWT_SECRET_KEY || '';
+    const token = jwt.sign({ username: newUser.username }, secretKey, { expiresIn: '1h' });
+
+    return res.status(201).json({ token });
+  } catch (error) {
+    console.error('Error during registration:', error);
+    return res.status(500).json({ message: 'Failed to create user' });
+  }
+};
+
 // Create a new router instance
 const router = Router();
 
 // POST /login - Login a user
 router.post('/login', login);  // Define the login route
+
+// POST /register - Register a new user
+router.post('/register', register);
 
 export default router;  // Export the router instance

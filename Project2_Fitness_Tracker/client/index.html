@@ -1,51 +1,18 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fitness Tracker</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-</head>
-<body>
-  <div class="container">
-    <h1 class="center-align">Fitness Tracker</h1>
-    
-    <!-- Step Counter -->
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">Steps Today</span>
-        <p id="steps-count" class="flow-text">0</p>
-        <button class="btn" onclick="updateSteps()">Add Step</button>
-      </div>
-    </div>
-
-    <!-- Workout Log -->
-    <div class="card">
-      <div class="card-content">
-        <span class="card-title">Workout Log</span>
-        <textarea id="workout-log" class="materialize-textarea" placeholder="Log your workouts here..."></textarea>
-        <button class="btn green">Save Log</button>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-    let steps = 0;
-    let calories = 0;
-
-    function updateSteps() {
-      steps += 1;
-      document.getElementById("steps-count").textContent = steps;
-    }
-
-    function addCalories() {
-      const input = document.getElementById("calorie-input").value;
-      if (input) {
-        calories += parseInt(input);
-        document.getElementById("calorie-total").textContent = `Total: ${calories}`;
-        document.getElementById("calorie-input").value = ''; // Clear input
-      }
-    }
-  </script>
-</body>
+  <head>
+        <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fitness Tracker</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+     <!-- Compiled and minified JavaScript -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </body>
 </html>

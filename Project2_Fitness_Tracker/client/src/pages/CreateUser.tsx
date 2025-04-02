@@ -26,6 +26,7 @@ const CreateUser = () => {
     try {
       const data = await createUser(userData);
       Auth.login(data.token); // Automatically log in after registration
+      setSuccessMessage('Account created successfully!');
     } catch (err) {
       console.error('Failed to create user', err);
       setErrorMessage('Failed to create account. Please try again.');

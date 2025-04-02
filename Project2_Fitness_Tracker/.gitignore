@@ -6,17 +6,21 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
-*node_modules
-*dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# Runtime data
+pids
+*.pid
+*.seed
+*.dat
+# Directory for compiled files
+dist
+build
+out
+# node_modules
+node_modules
+# Editor and IDE files
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
@@ -60,6 +64,8 @@ Thumbs.db
 # Temporary files
 tmp
 # Environment variables file
-.env
+
 # Ignore coverage reports
 coverage
+
+
