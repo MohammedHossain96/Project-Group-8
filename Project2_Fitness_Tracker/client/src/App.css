@@ -204,11 +204,9 @@ button.btn-primary,
   align-items: center;
   padding: 15px 25px; /* Increase padding to make it bigger */
   background: rgba(255, 255, 255, 0.15); /* Semi-transparent background */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--input-border);
-  margin-bottom: 30px;
-  border-radius: 0 0 15px 15px; /* Round bottom corners */
+  margin: 7px;
+  border-radius: 15px; /* Round all corners */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
   flex-wrap: wrap; /* Allow wrapping on small screens */
 }
@@ -228,6 +226,8 @@ button.btn-primary,
   flex: 2; /* Take more space in the middle */
   display: flex;
   justify-content: center;
+  max-width: 100%; /* Ensure it doesn't exceed the navbar width */
+  overflow: hidden; /* Prevent overflow */
 }
 
 /* Right section with user info and logout */
@@ -304,10 +304,9 @@ button.btn-primary,
 
 .nav button:hover {
   opacity: 0.9;
-# No need to specify stash@{0} here, this saves current changes
-git stash}
+}
 
-/* Weather in navbar styling */
+/* Weather in navbar styling - UPDATED */
 .nav-weather .weather-container {
   background: none;
   border: none;
@@ -319,7 +318,9 @@ git stash}
   gap: 15px;
   flex-wrap: wrap;
   justify-content: center;
-  min-width: 450px; /* Ensure adequate space */
+  max-width: 100%; /* Changed from min-width to max-width */
+  width: 100%; /* Ensure it takes available width but doesn't exceed parent */
+  overflow: hidden; /* Prevent content from spilling outside */
 }
 
 .nav-weather .weather-container h3 {
@@ -358,23 +359,27 @@ git stash}
   white-space: nowrap;
 }
 
-/* Mobile adjustments for weather in navbar */
-@media (max-width: 768px) {
-  .nav-weather {
-    width: 100%;
-    order: 2;
+/* Mobile adjustments for weather in navbar - UPDATED */
+@media (max-width: 992px) {
+  .nav-weather .weather-container {
+    padding: 0 10px;
+    flex-direction: column;
+    align-items: center;
   }
   
-  .nav-weather .weather-container {
-    flex-direction: column;
-    align-items: flex-start;
+  .nav-weather .weather-container > div:first-of-type {
     width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
   }
   
   .nav-weather .weather-container input {
-    max-width: 100%;
-    width: 100%;
-    margin-bottom: 5px;
+    width: 60%;
+  }
+  
+  .nav-weather .weather-container button {
+    width: 30%;
   }
 }
 
