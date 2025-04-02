@@ -74,7 +74,6 @@ body {
   align-items: center;
   padding: 10px 20px;
   background: rgba(255, 255, 255, 0.2); /* Subtle header background */
-  backdrop-filter: blur(5px);
   border-bottom: 1px solid var(--input-border);
   color: var(--text-primary);
   margin-bottom: 20px; 
@@ -109,8 +108,6 @@ body {
 /* Re-introduce Card Styling */
 .card {
   background: var(--input-bg); /* Use the semi-transparent background */
-  backdrop-filter: blur(10px); /* Optional: Add blur effect */
-  -webkit-backdrop-filter: blur(10px);
   border-radius: 15px; /* Rounded corners */
   border: 1px solid var(--input-border); /* Subtle white border */
   padding: 25px; /* Add some internal spacing */
@@ -450,7 +447,6 @@ button.btn-primary,
 
 .modal-content {
   background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(15px);
   padding: 30px;
   border-radius: 15px;
   border: 1px solid var(--input-border);
