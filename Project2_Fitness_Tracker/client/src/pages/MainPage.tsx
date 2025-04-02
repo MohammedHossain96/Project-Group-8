@@ -1,28 +1,13 @@
 import { useState, useEffect } from 'react';
+import Weather from '../components/Weather'; // Import the Weather component
 
 const MainPage = () => {
-  const [weather, setWeather] = useState(null);
-  const [playlists, setPlaylists] = useState([]);
+  const [playlists, setPlaylists] = useState<{ name: string; url: string }[]>([]);
   const [fitnessData, setFitnessData] = useState({
     steps: 0,
     cardio: 0,
     weightLifting: 0,
   });
-
-  // Fetch weather data
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const response = await fetch('/api/weather'); // Replace with your weather API endpoint
-        const data = await response.json();
-        setWeather(data);
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-    };
-
-    fetchWeather();
-  }, []);
 
   // Fetch music playlists
   useEffect(() => {
@@ -69,15 +54,7 @@ const MainPage = () => {
       {/* Weather Info Section */}
       <div className="card">
         <h2>Weather Info</h2>
-        {weather ? (
-          <div>
-            <p><strong>Location:</strong> {weather.location}</p>
-            <p><strong>Temperature:</strong> {weather.temperature}°C</p>
-            <p><strong>Condition:</strong> {weather.condition}</p>
-          </div>
-        ) : (
-          <p>Loading weather data...</p>
-        )}
+        <Weather /> {/* Use the Weather component */}
       </div>
 
       {/* Music Playlists Section */}
