@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import FitnessForm from '../components/FitnessForm';
+import Badge from '../components/Badge';
+import { getUserBadges } from '../api/badgeAPI';
+import Auth from '../utils/auth';
 
 const MainPage = () => {
   const [weather, setWeather] = useState(null);
@@ -8,6 +12,7 @@ const MainPage = () => {
     cardio: 0,
     weightLifting: 0,
   });
+  const [userBadges, setUserBadges] = useState([]);
 
   // Fetch weather data
   useEffect(() => {
@@ -54,9 +59,43 @@ const MainPage = () => {
     fetchFitnessData();
   }, []);
 
+  useEffect(() => {
+    const fetchBadges = async () => {
+      const user = Auth.getProfile();
+      if (user) {
+        const badges = await getUserBadges(parseInt(user.id));
+        setUserBadges(badges);
+      }
+    };
+
+    fetchBadges();
+  }, []);
+
   return (
     <div className="container">
       <h1>Fitness Tracker Dashboard</h1>
+
+      <div className="row">
+        <div className="col s12 m6">
+          <FitnessForm />
+        </div>
+        <div className="col s12 m6">
+          <div className="card">
+            <div className="card-content">
+              <h2>Your Badges</h2>
+              <div className="badge-container">
+                {userBadges.map((badge, index) => (
+                  <Badge
+                    key={index}
+                    category={badge.badgeCategory}
+                    level={badge.badgeLevel}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Fitness Data Section */}
       <div className="card">

@@ -1,5 +1,10 @@
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 
+interface UserProfile extends JwtPayload {
+  id: string;
+  username: string;
+}
+
 class Auth {
   // Retrieve the token from localStorage
   static getToken(): string | null {
@@ -7,9 +12,9 @@ class Auth {
   }
 
   // Decode the token to get the user's profile
-  static getProfile() {
+  static getProfile(): UserProfile | null {
     const token = this.getToken();
-    return token ? jwtDecode<JwtPayload>(token) : null;
+    return token ? jwtDecode<UserProfile>(token) : null;
   }
 
   // Check if the user is logged in by verifying the token exists and is not expired
