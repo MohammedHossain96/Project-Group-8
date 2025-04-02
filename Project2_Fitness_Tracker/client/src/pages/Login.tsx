@@ -6,6 +6,7 @@ import { login } from '../api/authAPI';
 const Login = () => {
   const [loginData, setLoginData] = useState({ username: '', password: '' });
   const [errorMessage, setErrorMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,6 +16,8 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (loading) return; // Prevent multiple submissions
+    setLoading(true); // Set loading to true
     setErrorMessage('');
 
     try {
@@ -24,6 +27,8 @@ const Login = () => {
     } catch (err) {
       console.error('Failed to login', err);
       setErrorMessage('Invalid username or password');
+    } finally {
+      setLoading(false); // Set loading back to false
     }
   };
 
@@ -38,6 +43,7 @@ const Login = () => {
           value={loginData.username}
           onChange={handleChange}
           required
+          disabled={loading} // Disable input when loading
         />
         <label>Password</label>
         <input
@@ -46,8 +52,11 @@ const Login = () => {
           value={loginData.password}
           onChange={handleChange}
           required
+          disabled={loading} // Disable input when loading
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}> 
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         {/* Add the message and hyperlink */}

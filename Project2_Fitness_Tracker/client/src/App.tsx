@@ -3,6 +3,7 @@ import Login from './pages/Login';
 import MainPage from './pages/MainPage';
 import Auth from './utils/auth';
 import Navbar from './components/Navbar';
+import './App.css'; // Import the App CSS
 
 const App = () => {
   return (

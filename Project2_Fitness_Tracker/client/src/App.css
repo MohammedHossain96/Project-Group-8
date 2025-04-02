@@ -1,14 +1,26 @@
 /* Base styles */
 :root {
-  --primary-color: #1e5631; /* Slightly brighter green */
-  --secondary-color: #0e3b6b; /* Slightly brighter blue */
-  --accent-color: #4a6d8c; /* Brighter slate blue accent */
-  --accent-highlight: #5d89b3; /* Highlight accent for pop */
-  --dark-color: #1a1a1a; /* Slightly lighter rich black */
-  --text-color: #e0e0e0; /* Light gray instead of pure white */
-  --glass-bg: rgba(25, 25, 25, 0.6); /* Slightly lighter glass background */
-  --glass-border: rgba(80, 80, 80, 0.2); /* Slightly lighter glass border */
-  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Deeper shadows */
+  /* Gradient Sunrise Theme Variables */
+  --gradient-rose: #FF6B6B; /* Placeholder Rose/Pink */
+  --gradient-purple: #8E44AD; /* Placeholder Purple */
+  --gradient-orange: #FFA500; /* Placeholder Golden Orange */
+  --accent-blue: #007BFF;   /* Placeholder Bright Blue */
+
+  /* Create a gradient as CSS variable for buttons */
+  --button-gradient: linear-gradient(to right, var(--gradient-rose), var(--gradient-purple)); 
+
+  --text-primary: #FFFFFF;    /* White */
+  --text-secondary: #f0f0f0;  /* Lighter Gray */
+
+  /* Input Field Style */
+  --input-bg: rgba(255, 255, 255, 0.15); /* Slightly less transparent */
+  --input-border: rgba(255, 255, 255, 0.6); /* More opaque border */
+
+  /* Remove or comment out old variables if no longer needed */
+  /* --glass-bg: rgba(26, 26, 26, 0.65); */
+  /* --glass-border: rgba(100, 100, 100, 0.2); */
+  /* --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); */
+  /* --ambient-glow: 0 0 20px rgba(76, 42, 133, 0.5); */
 }
 
 #root {
@@ -17,6 +29,7 @@
   padding: 0;
   text-align: left;
   min-height: 100vh;
+  font-weight: 300; /* Lighter base font weight */
 }
 
 /* Gradient animation */
@@ -27,7 +40,7 @@
 }
 
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', 'Roboto', sans-serif; /* Added Inter as preferred font */
   margin: 0;
   padding: 0;
   height: 100%;
@@ -36,19 +49,51 @@ html {
 body {
   margin: 0;
   padding: 0;
-  padding-top: 0px;
+  padding-top: 0px; /* Keep this if needed for layout */
   min-height: 100vh;
   width: 100%;
-  /* Updated gradient with more vibrant colors and better contrast */
-  background: linear-gradient(-45deg, 
-    var(--primary-color), 
-    var(--secondary-color), 
-    var(--accent-highlight),
-    var(--dark-color));
-  background-size: 300% 300%; /* Larger size for more subtle transitions */
-  animation: gradientAnimation 25s ease infinite; /* Slower animation for subtlety */
-  color: var(--text-color);
-  overflow-x: hidden;
+  /* Updated gradient - Diagonal Sunrise */
+  background: linear-gradient(to bottom right,
+    var(--gradient-rose),
+    var(--gradient-purple),
+    var(--gradient-orange)
+  );
+  background-size: 200% 200%; /* Ensure gradient covers */
+  animation: gradientAnimation 15s ease infinite; /* Keep or adjust animation */
+  color: var(--text-primary); /* Default text color */
+}
+
+.main-content {
+  padding: 20px; 
+}
+
+/* Header Styles */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.2); /* Subtle header background */
+  border-bottom: 1px solid var(--input-border);
+  color: var(--text-primary);
+  margin-bottom: 20px; 
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Spacing between items */
+}
+
+.header-right {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+}
+
+.weather-info, .user-info, .time-info {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Spacing within info items */
 }
 
 /* Container */
@@ -60,111 +105,372 @@ body {
   box-sizing: border-box;
 }
 
-/* Glass effect for cards */
+/* Re-introduce Card Styling */
 .card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 15px;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--card-shadow);
-  margin-bottom: 20px;
-  overflow: hidden;
-  color: var(--text-color);
+  background: var(--input-bg); /* Use the semi-transparent background */
+  border-radius: 15px; /* Rounded corners */
+  border: 1px solid var(--input-border); /* Subtle white border */
+  padding: 25px; /* Add some internal spacing */
+  margin-bottom: 20px; /* Space between cards */
+  color: var(--text-primary); /* Ensure text inside is white */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 5px rgba(255, 255, 255, 0.1); /* Subtle shadow + inner glow */
 }
 
-.card-content {
-  padding: 24px;
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+.card h5,
+.card h6,
+.card p,
+.card label,
+.card span,
+.card li {
+  color: var(--text-primary);
+  font-weight: inherit; /* Inherit base lighter weight unless overridden */
 }
 
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 16px;
-  display: block;
-  color: var(--text-color);
+/* Basic Input Styling */
+input {
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  color: var(--text-primary);
+  border-radius: 8px; /* Optional: rounded corners */
+  padding: 0.8em 1em;
+  font-family: inherit;
+  font-size: 1em;
 }
 
-/* Form elements */
-input, select, textarea, button {
-  background: rgba(30, 30, 30, 0.6); /* Darker input backgrounds */
-  border: 1px solid var(--glass-border);
-  border-radius: 8px;
-  padding: 12px;
-  color: var(--text-color);
-  font-size: 1rem;
-  width: 100%;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+input::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.7;
 }
 
-input:focus, select:focus, textarea:focus {
-  outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(58, 80, 107, 0.3); /* Accent color shadow */
-}
+/* --- BUTTON STYLING --- */
 
-/* Button styles */
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
+/* General Button Styling - Apply gradient to ALL buttons by default */
+button {
+  background: var(--button-gradient);
+  color: var(--text-primary);
   border: none;
   border-radius: 8px;
-  background: rgba(30, 30, 30, 0.7); /* Darker button background */
-  color: var(--text-color);
+  padding: 0.8em 1.5em; /* Corrected padding */
+  font-size: 1em;
   font-weight: 500;
-  text-align: center;
+  font-family: inherit;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  transition: opacity 0.25s, transform 0.1s;
+  text-align: center;
+  width: auto; /* Default to auto width, specific rules can override */
+  display: inline-block; /* Allow inline placement */
+  box-sizing: border-box;
 }
 
-.btn:hover {
-  background: rgba(50, 50, 50, 0.8); /* Darker hover state */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Darker shadow */
+/* General button hover effect */
+button:hover {
+  opacity: 0.9;
 }
 
-.btn.green {
-  background: rgba(15, 58, 19, 0.7); /* Darker green */
+/* Override for specific common buttons (like submit) to ensure gradient */
+button[type="submit"],
+.fitness-tracker button,
+.btn-primary,
+button.btn-primary,
+.btn.green,
+.card button[type="submit"] {
+  background: var(--button-gradient) !important; /* Keep !important for specificity */
+  /* Removed width: 100% - allow button to size naturally */
 }
 
-.btn.green:hover {
-  background: rgba(15, 58, 19, 0.9);
+/* Specific styles for weather search button - NOW WITH GRADIENT */
+.weather-container button,
+.weather-search {
+  background: var(--button-gradient) !important; /* Apply gradient */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* Add subtle border */
+  border-radius: 20px !important;
+  color: var(--text-primary) !important;
+  width: auto !important;
+  padding: 8px 20px !important;
+  margin-top: 10px;
 }
 
-.btn.red {
-  background: rgba(121, 33, 27, 0.7); /* Darker red */
+/* Enhanced Navbar Styling */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px; /* Increase padding to make it bigger */
+  background: rgba(255, 255, 255, 0.15); /* Semi-transparent background */
+  border-bottom: 1px solid var(--input-border);
+  margin: 7px;
+  border-radius: 15px; /* Round all corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  flex-wrap: wrap; /* Allow wrapping on small screens */
 }
 
-.btn.red:hover {
-  background: rgba(121, 33, 27, 0.9);
+/* Style the app title within navbar */
+.nav-title {
+  font-size: 1.8rem;
+  font-weight: 500; /* Make the title stand out */
+  color: var(--text-primary);
+  letter-spacing: 0.5px; /* Slight letter spacing for modern look */
+  flex: 1; /* Take up available space on the left */
+  min-width: 200px; /* Ensure the title has enough space */
 }
 
-.btn.blue {
-  background: rgba(7, 33, 64, 0.7); /* Darker blue */
+/* Weather container takes up central space */
+.nav-weather {
+  flex: 2; /* Take more space in the middle */
+  display: flex;
+  justify-content: center;
+  max-width: 100%; /* Ensure it doesn't exceed the navbar width */
+  overflow: hidden; /* Prevent overflow */
 }
 
-.btn.blue:hover {
-  background: rgba(7, 33, 64, 0.9);
+/* Right section with user info and logout */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1; /* Take up available space on the right */
+  justify-content: flex-end;
+  min-width: 200px; /* Ensure enough space */
 }
 
-/* Navbar link specific styles */
-.nav-link {
-  color: #e0e0e0; /* Light gray instead of pure white */
-  text-decoration: none;
+/* Style for user and time info */
+.user-time-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10px;
+}
+
+.username {
+  font-size: 1rem;
   font-weight: 500;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  padding: 0px 2px;
-  border-radius: 12px;
-  transition: all 0.2s ease-in-out;
-  display: inline-block;
+  color: var(--text-primary);
+}
+
+.current-time {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Remove default list styling from navbar items */
+.nav ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 20px; /* Space between navbar items */
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+/* Style navbar links */
+.nav-link {
+  color: var(--text-primary);
+  font-weight: 400;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: background 0.2s;
 }
 
 .nav-link:hover {
-  color: #ffffff; /* Pure white on hover for contrast */
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Special styling for the logout button in navbar - NOW WITH GRADIENT */
+.nav button {
+  background: var(--button-gradient) !important; /* Apply gradient */
+  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* Add subtle border */
+  color: var(--text-primary);
+  
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 1rem;
+  transition: opacity 0.2s, transform 0.1s;
+  width: auto; /* Override the 100% width */
+}
+
+.nav button:hover {
+  opacity: 0.9;
+}
+
+/* Weather in navbar styling - UPDATED */
+.nav-weather .weather-container {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%; /* Changed from min-width to max-width */
+  width: 100%; /* Ensure it takes available width but doesn't exceed parent */
+  overflow: hidden; /* Prevent content from spilling outside */
+}
+
+.nav-weather .weather-container h3 {
+  display: none; /* Hide the Weather Info title in navbar */
+}
+
+.nav-weather .weather-container input {
+  width: 180px;
+  height: 35px;
+  padding: 5px 15px;
+}
+
+.nav-weather .weather-container button {
+  margin-top: 0;
+  height: 35px;
+  padding: 5px 20px;
+  min-width: 80px;
+}
+
+.nav-weather .weather-container > div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 160px;
+}
+
+.nav-weather .weather-container h4 {
+  font-size: 1rem;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+}
+
+.nav-weather .weather-container p {
+  font-size: 0.9rem;
+  margin: 0 0 3px 0;
+  white-space: nowrap;
+}
+
+/* Mobile adjustments for weather in navbar - UPDATED */
+@media (max-width: 992px) {
+  .nav-weather .weather-container {
+    padding: 0 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .nav-weather .weather-container > div:first-of-type {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .nav-weather .weather-container input {
+    width: 60%;
+  }
+  
+  .nav-weather .weather-container button {
+    width: 30%;
+  }
+}
+
+/* Mobile responsiveness for the navbar */
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+}
+
+/* The weather-specific button styling */
+.weather-container button {
+  margin-top: 10px;
+}
+
+/* Navbar link specific styles - Adjusted */
+.navbar-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: var(--text-primary);
+  background-color: rgba(51, 204, 255, 0.1); /* Subtle blue background on hover */
+}
+
+/* Badge Styles - Example Using Status Colors */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--input-border);
+  border-radius: 20px;
+  margin: 4px;
+  font-size: 0.9em;
+}
+
+.badge-medal {
+  font-size: 1.2em;
+}
+
+/* Example badge category colors */
+.badge[data-category="cardio"] .badge-medal { color: var(--gradient-rose); }
+.badge[data-category="weights"] .badge-medal { color: var(--gradient-orange); }
+.badge[data-category="calories"] .badge-medal { color: var(--gradient-purple); } 
+
+/* Modal Styles - Adjusted */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Darker overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 30px;
+  border-radius: 15px;
+  border: 1px solid var(--input-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); 
+  text-align: center;
+  color: var(--text-primary);
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-content h2 {
+  color: var(--accent-blue);
+  margin-bottom: 15px;
+}
+
+.large-medal {
+  font-size: 3em;
+  display: block;
+  margin: 10px 0;
+}
+
+.modal-content button {
+  margin-top: 20px;
+  /* Use existing button styles */
 }
 
 /* Utility classes */
@@ -188,6 +494,22 @@ input:focus, select:focus, textarea:focus {
 
 .mt-3 {
   margin-top: 16px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+
+/* Add specific class for login form container if needed */
+.login-form-container {
+  max-width: 400px;
+  margin: 40px auto;
 }
 
 /* Row and column layout */
