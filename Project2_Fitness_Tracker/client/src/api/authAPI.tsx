@@ -37,7 +37,7 @@ const createUser = async (userInfo: UserLogin) => {
     }
 
     const data = await response.json();
-    return data; // This will include the token if the registration is successful
+    return data;
   } catch (error) {
     console.error('Error during registration:', error);
     throw error;
