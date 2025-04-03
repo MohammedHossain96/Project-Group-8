@@ -1,4 +1,4 @@
-import { Fitness } from '../models/index.js';
+import { Fitness, Milestone } from '../models/index.js';
 
 export const seedFitness = async () => {
   // Create some initial fitness data for users 1-3
@@ -37,5 +37,80 @@ export const seedFitness = async () => {
   ];
 
   await Fitness.bulkCreate(fitnessData);
-  console.log('Fitness data seeded successfully');
+  
+  const badgeData = [
+    // User 1 badges - mix of levels
+    // Bronze badges (Level 1)
+    {
+      userId: 1,
+      milestone: 'cardio_milestone',
+      achieved: true,
+      badgeCategory: 'cardio',
+      badgeLevel: 1  // Bronze - 5km
+    },
+    {
+      userId: 1,
+      milestone: 'weights_milestone',
+      achieved: true,
+      badgeCategory: 'weights',
+      badgeLevel: 2  // Silver - 250lbs
+    },
+    {
+      userId: 1,
+      milestone: 'calories_milestone',
+      achieved: true,
+      badgeCategory: 'calories',
+      badgeLevel: 1  // Bronze - 500 calories
+    },
+    
+    // User 2 badges - higher in cardio
+    {
+      userId: 2,
+      milestone: 'cardio_milestone',
+      achieved: true,
+      badgeCategory: 'cardio',
+      badgeLevel: 2  // Silver - 15km
+    },
+    {
+      userId: 2,
+      milestone: 'weights_milestone',
+      achieved: true, 
+      badgeCategory: 'weights',
+      badgeLevel: 1  // Bronze - 100lbs
+    },
+    {
+      userId: 2,
+      milestone: 'calories_milestone',
+      achieved: true,
+      badgeCategory: 'calories',
+      badgeLevel: 2  // Silver - 1500 calories
+    },
+    
+    // User 3 badges - gold in one category
+    {
+      userId: 3,
+      milestone: 'cardio_milestone',
+      achieved: true,
+      badgeCategory: 'cardio',
+      badgeLevel: 3  // Gold - 30km
+    },
+    {
+      userId: 3,
+      milestone: 'weights_milestone',
+      achieved: true,
+      badgeCategory: 'weights',
+      badgeLevel: 1  // Bronze - 100lbs
+    },
+    {
+      userId: 3,
+      milestone: 'calories_milestone',
+      achieved: true,
+      badgeCategory: 'calories',
+      badgeLevel: 3  // Gold - 3000 calories
+    }
+  ];
+
+  await Milestone.bulkCreate(badgeData as any, {
+    fields: ['userId', 'milestone', 'achieved', 'badgeCategory', 'badgeLevel']
+  });
 };
