@@ -70,13 +70,16 @@ const MainPage = () => {
                 <h2>Your Badges</h2>
                 <div className="badge-container">
                   {Array.isArray(userBadges) && userBadges.length > 0 ? (
-                    userBadges.map((badge, index) => (
-                      <Badge
-                        key={index}
-                        category={badge.badgeCategory}
-                        level={badge.badgeLevel}
-                      />
-                    ))
+                    // Filter out badges with level 0 before mapping
+                    userBadges
+                      .filter(badge => badge.badgeLevel > 0)
+                      .map((badge, index) => (
+                        <Badge
+                          key={index}
+                          category={badge.badgeCategory}
+                          level={badge.badgeLevel}
+                        />
+                      ))
                   ) : (
                     <p>No badges earned yet.</p>
                   )}
