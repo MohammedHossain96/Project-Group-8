@@ -83,12 +83,12 @@ function determineBadgeLevel(category: 'cardio' | 'weights' | 'calories', value:
 }
 
 // Function to show a pop-up with the awarded badge
-function showBadgePopup(badgeLevel: number) {
-  const medals = ['', '🥉', '🥈', '🥇']; // No badge, Bronze, Silver, Gold medals
-  if (badgeLevel > 0) {
-    alert(`Congratulations! You've earned a ${medals[badgeLevel]} milestone badge!`);
-  }
-}
+// function showBadgePopup(badgeLevel: number) {
+//   const medals = ['', '🥉', '🥈', '🥇']; // No badge, Bronze, Silver, Gold medals
+//   if (badgeLevel > 0) {
+//     alert(`Congratulations! You've earned a ${medals[badgeLevel]} milestone badge!`);
+//   }
+// }
 
 // Function to check and award a badge when a milestone is achieved
 export async function awardBadge(userId: number, milestoneName: string, badgeCategory: 'cardio' | 'weights' | 'calories', inputValue: number) {
