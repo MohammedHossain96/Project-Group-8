@@ -22,7 +22,7 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
   });
 
   const [showBadgeModal, setShowBadgeModal] = useState(false);
-  const [badgeInfo, setBadgeInfo] = useState({ level: 0, category: '' });
+  const [earnedBadges, setEarnedBadges] = useState<Array<{badgeLevel: number, category: string}>>([]);
 
   const handleFocus = (field: keyof FitnessFormData) => {
     if (formData[field] === 0) {
@@ -62,6 +62,7 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
 
       // Check for badges in each category
       const categories: Array<'cardio' | 'weights' | 'calories'> = ['cardio', 'weights', 'calories'];
+      const newBadges: Array<{badgeLevel: number, category: string}> = [];
       
       for (const category of categories) {
         console.log(`Checking badge for ${category}:`, submissionData[category]);
@@ -76,10 +77,17 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
         console.log(`Badge check result for ${category}:`, result);
 
         if (result && result.newBadge) {
-          setBadgeInfo({ level: result.badgeLevel, category });
-          setShowBadgeModal(true);
-          break; // Show only one badge at a time
+          newBadges.push({ 
+            badgeLevel: result.badgeLevel, 
+            category 
+          });
         }
+      }
+
+      // If any badges were earned, show the modal
+      if (newBadges.length > 0) {
+        setEarnedBadges(newBadges);
+        setShowBadgeModal(true);
       }
 
       // Reset form
@@ -151,8 +159,7 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
       <BadgeModal
         isOpen={showBadgeModal}
         onClose={() => setShowBadgeModal(false)}
-        badgeLevel={badgeInfo.level}
-        category={badgeInfo.category}
+        badges={earnedBadges}
       />
     </div>
   );
