@@ -20,11 +20,14 @@ const MainPage = () => {
       try {
         const userId = typeof profile.id === 'string' ? parseInt(profile.id, 10) : profile.id;
         if (!isNaN(userId)) {
+          // Get badges first to ensure they're up to date
+          const badges = await getUserBadges(userId);
+          setUserBadges(badges);
+          
           const data = await getUserFitnessData(userId);
           setFitnessData(data);
           
-          const badges = await getUserBadges(userId);
-          setUserBadges(badges);
+          console.log('Refreshed badges:', badges);
         }
       } catch (error) {
         console.error('Error refreshing data:', error);

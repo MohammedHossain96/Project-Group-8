@@ -92,13 +92,21 @@ function showBadgePopup(badgeLevel: number) {
 
 // Function to check and award a badge when a milestone is achieved
 export async function awardBadge(userId: number, milestoneName: string, badgeCategory: 'cardio' | 'weights' | 'calories', inputValue: number) {
+  // Ensure inputValue is a number
+  inputValue = Number(inputValue);
+  
+  console.log(`Checking badge for user ${userId}, category: ${badgeCategory}, value: ${inputValue}`);
+  
   const badgeLevel = determineBadgeLevel(badgeCategory, inputValue); // Determine badge level based on input
+  console.log(`Determined badge level: ${badgeLevel}`);
   
   // Find the milestone by user ID, name, and category
   const milestone = await Milestone.findOne({ where: { userId, milestone: milestoneName, badgeCategory } });
+  console.log(`Existing milestone found: ${milestone ? 'yes' : 'no'}`);
   
   // If milestone doesn't exist, create it
   if (!milestone) {
+    console.log(`Creating new milestone: ${milestoneName}, badge level: ${badgeLevel}`);
     const newMilestone = await Milestone.create({
       userId,
       milestone: milestoneName,
@@ -116,6 +124,7 @@ export async function awardBadge(userId: number, milestoneName: string, badgeCat
   
   // If the milestone exists and badge level can be upgraded, update it
   if (milestone && milestone.badgeLevel < badgeLevel) {
+    console.log(`Upgrading badge from level ${milestone.badgeLevel} to ${badgeLevel}`);
     const oldLevel = milestone.badgeLevel;
     milestone.achieved = badgeLevel > 0; // Mark as achieved only if badge level is greater than 0
     milestone.badgeLevel = badgeLevel; // Update badge level
@@ -129,6 +138,7 @@ export async function awardBadge(userId: number, milestoneName: string, badgeCat
     };
   }
   
+  console.log(`No badge upgrade needed. Current level: ${milestone?.badgeLevel || 0}`);
   // If no upgrade occurred
   return {
     newBadge: false,

@@ -45,9 +45,9 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
     try {
       // Convert any empty strings to 0 before submitting
       const submissionData = {
-        cardio: formData.cardio === '' ? 0 : formData.cardio,
-        weights: formData.weights === '' ? 0 : formData.weights,
-        calories: formData.calories === '' ? 0 : formData.calories
+        cardio: formData.cardio === '' ? 0 : Number(formData.cardio),
+        weights: formData.weights === '' ? 0 : Number(formData.weights),
+        calories: formData.calories === '' ? 0 : Number(formData.calories)
       };
       
       // Log the data being submitted
@@ -57,21 +57,19 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
       const userId = typeof user.id === 'string' ? parseInt(user.id) : user.id;
       await saveFitnessData(userId, submissionData);
       
-      // Notify parent component to refresh data
-      onFormSubmit();
-
       // Check for badges in each category
       const categories: Array<'cardio' | 'weights' | 'calories'> = ['cardio', 'weights', 'calories'];
       const newBadges: Array<{badgeLevel: number, category: string}> = [];
       
       for (const category of categories) {
-        console.log(`Checking badge for ${category}:`, submissionData[category]);
+        const value = submissionData[category];
+        console.log(`Checking badge for ${category}:`, value);
         
         const result = await checkAndAwardBadge({
-          userId: typeof user.id === 'string' ? parseInt(user.id) : user.id,
+          userId: userId,
           milestoneName: `${category}_milestone`,
           badgeCategory: category,
-          inputValue: submissionData[category] as number
+          inputValue: value
         });
 
         console.log(`Badge check result for ${category}:`, result);
@@ -89,6 +87,11 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
         setEarnedBadges(newBadges);
         setShowBadgeModal(true);
       }
+
+      // Always notify parent to refresh data AFTER we've processed badges
+      setTimeout(() => {
+        onFormSubmit();
+      }, 100);
 
       // Reset form
       setFormData({ cardio: 0, weights: 0, calories: 0 });
