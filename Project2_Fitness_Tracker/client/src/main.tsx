@@ -16,11 +16,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Login />, // Show the Login page by default
+        element: <Login />, // Default route
       },
       {
         path: '/main',
-        element: <MainPage />, // MainPage is now at /main
+        element: <MainPage />, // MainPage is at /main
       },
       {
         path: '/createuser',
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <Login />, // Show the Login page
+        element: <Login />,
       },
     ],
   },
