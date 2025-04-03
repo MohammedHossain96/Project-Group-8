@@ -1,4 +1,6 @@
 import { seedUsers } from './user-seeds.js';
+import { seedBadges } from './badge-seeds.js';
+import { seedFitness } from './fitness-seeds.js';
 import { sequelize } from '../models/index.js';
 
 const seedAll = async (): Promise<void> => {
@@ -8,6 +10,12 @@ const seedAll = async (): Promise<void> => {
     
     await seedUsers();
     console.log('\n----- USERS SEEDED -----\n');
+    
+    await seedBadges();
+    console.log('\n----- BADGE MILESTONES SEEDED -----\n');
+    
+    await seedFitness();
+    console.log('\n----- FITNESS DATA SEEDED -----\n');
     
     process.exit(0);
   } catch (error) {

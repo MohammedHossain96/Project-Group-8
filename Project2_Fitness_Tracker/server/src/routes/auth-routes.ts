@@ -27,8 +27,8 @@ export const login = async (req: Request, res: Response) => {
   // Get the secret key from environment variables
   const secretKey = process.env.JWT_SECRET_KEY || '';
 
-  // Generate a JWT token for the authenticated user
-  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+  // Generate a JWT token for the authenticated user, including the user ID
+  const token = jwt.sign({ username, id: user.id }, secretKey, { expiresIn: '1h' });
   return res.json({ token });  // Send the token as a JSON response
 };
 
@@ -47,9 +47,9 @@ export const register = async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ username, password: hashedPassword });
 
-    // Generate a JWT token for the new user
+    // Generate a JWT token for the new user, including the user ID
     const secretKey = process.env.JWT_SECRET_KEY || '';
-    const token = jwt.sign({ username: newUser.username }, secretKey, { expiresIn: '1h' });
+    const token = jwt.sign({ username: newUser.username, id: newUser.id }, secretKey, { expiresIn: '1h' });
 
     return res.status(201).json({ token });
   } catch (error) {
