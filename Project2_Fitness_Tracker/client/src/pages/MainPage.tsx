@@ -123,6 +123,26 @@ const MainPage = () => {
                 </div>
               </div>
             </div>
+            
+           
+            <div className="card">
+              <div className="card-content">
+                <h2>Music Playlists</h2>
+                {playlists.length > 0 ? (
+                  <ul>
+                    {playlists.map((playlist, index) => (
+                      <li key={index}>
+                        <a href={playlist.url} target="_blank" rel="noopener noreferrer">
+                          {playlist.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>Loading playlists...</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -173,27 +193,8 @@ const MainPage = () => {
         </div>
 
         <div className="row">
-          <div className="col s12 m6">
-            <div className="card">
-              <div className="card-content">
-                <h2>Music Playlists</h2>
-                {playlists.length > 0 ? (
-                  <ul>
-                    {playlists.map((playlist, index) => (
-                      <li key={index}>
-                        <a href={playlist.url} target="_blank" rel="noopener noreferrer">
-                          {playlist.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>Loading playlists...</p>
-                )}
-              </div>
-            </div>
-          </div>
-          <div className="col s12 m6">
+       
+          <div className="col s12">
             <TipsCard />
           </div>
         </div>
