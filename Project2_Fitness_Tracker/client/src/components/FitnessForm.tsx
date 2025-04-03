@@ -2,7 +2,7 @@ import { useState, FormEvent } from 'react';
 import { checkAndAwardBadge } from '../api/badgeAPI';
 import { saveFitnessData } from '../api/fitnessAPI';
 import BadgeModal from './BadgeModal';
-import Auth from '../utils/auth'; // Fixed import path
+import Auth from '../utils/auth'; 
 
 interface FitnessFormData {
   cardio: number | '';
@@ -16,25 +16,20 @@ interface FitnessFormProps {
 
 const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
   const [formData, setFormData] = useState<FitnessFormData>({
-    cardio: 0,
-    weights: 0,
-    calories: 0
+    cardio: '',
+    weights: '',
+    calories: ''
   });
 
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [earnedBadges, setEarnedBadges] = useState<Array<{badgeLevel: number, category: string}>>([]);
 
   const handleFocus = (field: keyof FitnessFormData) => {
-    if (formData[field] === 0) {
+    if (formData[field] ) {
       setFormData({ ...formData, [field]: '' });
     }
   };
 
-  const handleBlur = (field: keyof FitnessFormData) => {
-    if (formData[field] === '') {
-      setFormData({ ...formData, [field]: 0 });
-    }
-  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -94,7 +89,7 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
       }, 100);
 
       // Reset form
-      setFormData({ cardio: 0, weights: 0, calories: 0 });
+      setFormData({ cardio: '', weights: '', calories: '' });
     } catch (error) {
       console.error('Error submitting fitness data:', error);
     }
@@ -118,7 +113,7 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
                 setFormData({ ...formData, cardio: value });
               }}
               onFocus={() => handleFocus('cardio')}
-              onBlur={() => handleBlur('cardio')}
+              
               min="0"
               step="0.1"
             />
@@ -136,7 +131,7 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
                 setFormData({ ...formData, weights: value });
               }}
               onFocus={() => handleFocus('weights')}
-              onBlur={() => handleBlur('weights')}
+              
               min="0"
               step="0.5"
             />
@@ -154,7 +149,7 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
                 setFormData({ ...formData, calories: value });
               }}
               onFocus={() => handleFocus('calories')}
-              onBlur={() => handleBlur('calories')}
+            
               min="0"
             />
             <small className="helper-text">Estimated calories burned during exercise</small>
