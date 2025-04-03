@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import FitnessForm from '../components/FitnessForm';
 import Badge from '../components/Badge';
+import ProgressChart from '../components/ProgressChart';
 import { getUserBadges } from '../api/badgeAPI';
 import { getUserFitnessData } from '../api/fitnessAPI';
 import Auth from '../utils/auth';
+import TipsCard from '../components/TipsCard';
 
 const MainPage = () => {
   const [playlists, setPlaylists] = useState<{ name: string; url: string }[]>([]);
@@ -58,9 +60,41 @@ const MainPage = () => {
     refreshData();
   }, []);
 
+  // Define next milestones based on current totals
+  const getNextMilestone = (category: string, current: number) => {
+    if (category === 'cardio') {
+      if (current < 5) return 5;
+      if (current < 15) return 15;
+      if (current < 30) return 30;
+      return Math.ceil(current / 10) * 10; // Next 10km milestone
+    }
+    
+    if (category === 'weights') {
+      if (current < 100) return 100;
+      if (current < 250) return 250;
+      if (current < 500) return 500;
+      return Math.ceil(current / 100) * 100; // Next 100lbs milestone
+    }
+    
+    // Calories
+    if (current < 500) return 500;
+    if (current < 1500) return 1500;
+    if (current < 3000) return 3000;
+    return Math.ceil(current / 1000) * 1000; // Next 1000 calorie milestone
+  };
+
   return (
     <div className="main-container">
       <div className="main-content">
+        <div className="card welcome-card">
+          <div className="card-content">
+            <h1>Welcome, {username || 'Fitness Enthusiast'}!</h1>
+            <p className="welcome-message">
+              Track your fitness journey, earn badges, and stay motivated with your personalized dashboard!
+            </p>
+          </div>
+        </div>
+
         <h1>Fitness Tracker Dashboard</h1>
 
         <div className="row">
@@ -94,40 +128,73 @@ const MainPage = () => {
 
         <div className="card">
           <div className="card-content">
-              <h2>Fitness Data</h2>
-              <div className="row">
-                <div className="col s12 m6">
-                  <h3>Latest Workout</h3>
-                  <p><strong>Cardio:</strong> {fitnessData.latest.cardio} km</p>
-                  <p><strong>Weights:</strong> {fitnessData.latest.weights} lbs</p>
-                  <p><strong>Calories:</strong> {fitnessData.latest.calories}</p>
-                </div>
-                <div className="col s12 m6">
-                  <h3>Overall Stats</h3>
-                  <p><strong>Total Cardio:</strong> {fitnessData.totals.totalCardio || 0} km</p>
-                  <p><strong>Total Weight Lifted:</strong> {fitnessData.totals.totalWeights || 0} lbs</p>
-                  <p><strong>Total Calories Burned:</strong> {fitnessData.totals.totalCalories || 0}</p>
-                </div>
+            <h2>Fitness Progress</h2>
+            <div className="progress-container">
+              <ProgressChart 
+                category="Cardio Distance" 
+                current={fitnessData.latest.cardio} 
+                total={fitnessData.totals.totalCardio || 0} 
+                unit="km"
+                nextMilestone={getNextMilestone('cardio', fitnessData.totals.totalCardio || 0)} 
+              />
+              
+              <ProgressChart 
+                category="Weight Lifted" 
+                current={fitnessData.latest.weights} 
+                total={fitnessData.totals.totalWeights || 0} 
+                unit="lbs"
+                nextMilestone={getNextMilestone('weights', fitnessData.totals.totalWeights || 0)} 
+              />
+              
+              <ProgressChart 
+                category="Calories Burned" 
+                current={fitnessData.latest.calories} 
+                total={fitnessData.totals.totalCalories || 0} 
+                unit="cal"
+                nextMilestone={getNextMilestone('calories', fitnessData.totals.totalCalories || 0)} 
+              />
+            </div>
+
+            <div className="row">
+              <div className="col s12 m6">
+                <h3>Latest Workout</h3>
+                <p><strong>Cardio:</strong> {fitnessData.latest.cardio} km</p>
+                <p><strong>Weights:</strong> {fitnessData.latest.weights} lbs</p>
+                <p><strong>Calories:</strong> {fitnessData.latest.calories}</p>
               </div>
+              <div className="col s12 m6">
+                <h3>Overall Stats</h3>
+                <p><strong>Total Cardio:</strong> {fitnessData.totals.totalCardio || 0} km</p>
+                <p><strong>Total Weight Lifted:</strong> {fitnessData.totals.totalWeights || 0} lbs</p>
+                <p><strong>Total Calories Burned:</strong> {fitnessData.totals.totalCalories || 0}</p>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="card">
-          <div className="card-content">
-              <h2>Music Playlists</h2>
-              {playlists.length > 0 ? (
-                <ul>
-                  {playlists.map((playlist, index) => (
-                    <li key={index}>
-                      <a href={playlist.url} target="_blank" rel="noopener noreferrer">
-                        {playlist.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Loading playlists...</p>
-              )}
+        <div className="row">
+          <div className="col s12 m6">
+            <div className="card">
+              <div className="card-content">
+                <h2>Music Playlists</h2>
+                {playlists.length > 0 ? (
+                  <ul>
+                    {playlists.map((playlist, index) => (
+                      <li key={index}>
+                        <a href={playlist.url} target="_blank" rel="noopener noreferrer">
+                          {playlist.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>Loading playlists...</p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="col s12 m6">
+            <TipsCard />
           </div>
         </div>
       </div>

@@ -26,8 +26,24 @@ const Badge = ({ category, level, isNew = false }: BadgeProps) => {
     }
   };
 
+  const getTooltip = () => {
+    const milestones = {
+      cardio: ['5km achieved', '15km achieved', '30km achieved'],
+      weights: ['100lbs lifted', '250lbs lifted', '500lbs lifted'],
+      calories: ['500 calories burned', '1500 calories burned', '3000 calories burned']
+    };
+    
+    return level > 0 && level <= 3 
+      ? milestones[category][level-1] 
+      : 'Keep working to earn this badge!';
+  };
+
   return (
-    <div className={`badge ${animate ? 'badge-animate' : ''}`}>
+    <div 
+      className={`badge ${animate ? 'badge-animate' : ''}`}
+      data-category={category}
+      data-tooltip={getTooltip()}
+    >
       <span className="badge-medal">{getMedal(level)}</span>
       <span className="badge-category">{category}</span>
     </div>

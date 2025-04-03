@@ -104,8 +104,10 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
     <div className="card">
       <div className="card-content">
         <h2>Track Your Fitness</h2>
+        <p className="form-instructions">Record your latest workout achievements below. Your progress will update automatically.</p>
+        
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="input-field">
             <label htmlFor="cardio">Cardio (kilometers)</label>
             <input
               type="number"
@@ -120,9 +122,10 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
               min="0"
               step="0.1"
             />
+            <small className="helper-text">Distance you've run, walked, cycled, etc.</small>
           </div>
 
-          <div>
+          <div className="input-field">
             <label htmlFor="weights">Weights (total lbs)</label>
             <input
               type="number"
@@ -137,9 +140,10 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
               min="0"
               step="0.5"
             />
+            <small className="helper-text">Total weight lifted during your workout</small>
           </div>
 
-          <div>
+          <div className="input-field">
             <label htmlFor="calories">Calories Burned</label>
             <input
               type="number"
@@ -153,9 +157,10 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
               onBlur={() => handleBlur('calories')}
               min="0"
             />
+            <small className="helper-text">Estimated calories burned during exercise</small>
           </div>
 
-          <button type="submit" className="btn green">Submit</button>
+          <button type="submit" className="btn green">Save Workout</button>
         </form>
       </div>
 
