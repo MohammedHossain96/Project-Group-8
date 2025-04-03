@@ -128,18 +128,35 @@ const MainPage = () => {
             <div className="card">
               <div className="card-content">
                 <h2>Music Playlists</h2>
-                {playlists.length > 0 ? (
-                  <ul>
-                    {playlists.map((playlist, index) => (
-                      <li key={index}>
-                        <a href={playlist.url} target="_blank" rel="noopener noreferrer">
-                          {playlist.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>Loading playlists...</p>
+                
+                {/* Spotify Playlist Embed */}
+                <div className="spotify-embed-container">
+                  <iframe 
+                    style={{ borderRadius: "12px" }} 
+                    src="https://open.spotify.com/embed/playlist/1pQMeVHt7e5rxfMcm1Qk2z?utm_source=generator&theme=0" 
+                    width="100%" 
+                    height="352" 
+                    frameBorder="0" 
+                    allowFullScreen={true}
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                    loading="lazy">
+                  </iframe>
+                </div>
+                
+                {/* Existing playlists section - you can keep or remove this */}
+                {playlists.length > 0 && (
+                  <div className="playlist-links mt-2">
+                    <h3>Additional Playlists</h3>
+                    <ul>
+                      {playlists.map((playlist, index) => (
+                        <li key={index}>
+                          <a href={playlist.url} target="_blank" rel="noopener noreferrer">
+                            {playlist.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
             </div>
