@@ -1,7 +1,8 @@
 import { useState, FormEvent } from 'react';
 import { checkAndAwardBadge } from '../api/badgeAPI';
+import { saveFitnessData } from '../api/fitnessAPI';
 import BadgeModal from './BadgeModal';
-import Auth from '../utils/auth';
+import Auth from '../utils/auth'; // Fixed import path
 
 interface FitnessFormData {
   cardio: number;
@@ -9,7 +10,11 @@ interface FitnessFormData {
   calories: number;
 }
 
-const FitnessForm = () => {
+interface FitnessFormProps {
+  onFormSubmit: () => void;  // Callback to notify parent component to refresh data
+}
+
+const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
   const [formData, setFormData] = useState<FitnessFormData>({
     cardio: 0,
     weights: 0,
@@ -25,27 +30,37 @@ const FitnessForm = () => {
     
     if (!user) return;
 
-    // Check for badges in each category
-    const categories: Array<'cardio' | 'weights' | 'calories'> = ['cardio', 'weights', 'calories'];
-    
-    for (const category of categories) {
-      const value = formData[category];
-      const result = await checkAndAwardBadge({
-        userId: parseInt(user.id),
-        milestoneName: `${category}_milestone`,
-        badgeCategory: category,
-        inputValue: value
-      });
+    try {
+      // Save fitness data
+      const userId = typeof user.id === 'string' ? parseInt(user.id) : user.id;
+      await saveFitnessData(userId, formData);
+      
+      // Notify parent component to refresh data
+      onFormSubmit();
 
-      if (result && result.newBadge) {
-        setBadgeInfo({ level: result.badgeLevel, category });
-        setShowBadgeModal(true);
-        break; // Show only one badge at a time
+      // Check for badges in each category
+      const categories: Array<'cardio' | 'weights' | 'calories'> = ['cardio', 'weights', 'calories'];
+      
+      for (const category of categories) {
+        const result = await checkAndAwardBadge({
+          userId: typeof user.id === 'string' ? parseInt(user.id) : user.id,
+          milestoneName: `${category}_milestone`,
+          badgeCategory: category,
+          inputValue: formData[category]
+        });
+
+        if (result && result.newBadge) {
+          setBadgeInfo({ level: result.badgeLevel, category });
+          setShowBadgeModal(true);
+          break; // Show only one badge at a time
+        }
       }
-    }
 
-    // Reset form
-    setFormData({ cardio: 0, weights: 0, calories: 0 });
+      // Reset form
+      setFormData({ cardio: 0, weights: 0, calories: 0 });
+    } catch (error) {
+      console.error('Error submitting fitness data:', error);
+    }
   };
 
   return (

@@ -3,7 +3,7 @@ import { User } from './user.js'; // Import user for IDs
 
 // Define the structure of a milestone
 interface MilestoneAttributes {
-  id: number;
+  id?: number;
   userId: number; // Foreign key links the User model
   milestone: string; // The name of the milestone
   achieved: boolean; // Whether the milestone has been achieved
@@ -97,14 +97,43 @@ export async function awardBadge(userId: number, milestoneName: string, badgeCat
   // Find the milestone by user ID, name, and category
   const milestone = await Milestone.findOne({ where: { userId, milestone: milestoneName, badgeCategory } });
   
+  // If milestone doesn't exist, create it
+  if (!milestone) {
+    const newMilestone = await Milestone.create({
+      userId,
+      milestone: milestoneName,
+      achieved: badgeLevel > 0,
+      badgeCategory,
+      badgeLevel
+    });
+    
+    return {
+      newBadge: badgeLevel > 0,
+      badgeLevel,
+      milestone: newMilestone
+    };
+  }
+  
   // If the milestone exists and badge level can be upgraded, update it
   if (milestone && milestone.badgeLevel < badgeLevel) {
+    const oldLevel = milestone.badgeLevel;
     milestone.achieved = badgeLevel > 0; // Mark as achieved only if badge level is greater than 0
     milestone.badgeLevel = badgeLevel; // Update badge level
     await milestone.save(); // Save changes to the database
-    showBadgePopup(badgeLevel); // Show pop-up notification with the earned medal
-    console.log(`User ${userId} has achieved '${milestoneName}' in category '${badgeCategory}' and earned badge level ${badgeLevel}.`);
+    
+    return {
+      newBadge: true,
+      badgeLevel,
+      oldLevel,
+      milestone
+    };
   }
+  
+  // If no upgrade occurred
+  return {
+    newBadge: false,
+    badgeLevel: milestone ? milestone.badgeLevel : 0
+  };
 }
 
 // Function to check a user's current badges
