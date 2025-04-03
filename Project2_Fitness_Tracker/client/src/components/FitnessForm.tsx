@@ -5,9 +5,9 @@ import BadgeModal from './BadgeModal';
 import Auth from '../utils/auth'; // Fixed import path
 
 interface FitnessFormData {
-  cardio: number;
-  weights: number;
-  calories: number;
+  cardio: number | '';
+  weights: number | '';
+  calories: number | '';
 }
 
 interface FitnessFormProps {
@@ -24,6 +24,18 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [badgeInfo, setBadgeInfo] = useState({ level: 0, category: '' });
 
+  const handleFocus = (field: keyof FitnessFormData) => {
+    if (formData[field] === 0) {
+      setFormData({ ...formData, [field]: '' });
+    }
+  };
+
+  const handleBlur = (field: keyof FitnessFormData) => {
+    if (formData[field] === '') {
+      setFormData({ ...formData, [field]: 0 });
+    }
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const user = Auth.getProfile();
@@ -31,9 +43,19 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
     if (!user) return;
 
     try {
+      // Convert any empty strings to 0 before submitting
+      const submissionData = {
+        cardio: formData.cardio === '' ? 0 : formData.cardio,
+        weights: formData.weights === '' ? 0 : formData.weights,
+        calories: formData.calories === '' ? 0 : formData.calories
+      };
+      
+      // Log the data being submitted
+      console.log('Submitting fitness data:', submissionData);
+      
       // Save fitness data
       const userId = typeof user.id === 'string' ? parseInt(user.id) : user.id;
-      await saveFitnessData(userId, formData);
+      await saveFitnessData(userId, submissionData);
       
       // Notify parent component to refresh data
       onFormSubmit();
@@ -42,12 +64,16 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
       const categories: Array<'cardio' | 'weights' | 'calories'> = ['cardio', 'weights', 'calories'];
       
       for (const category of categories) {
+        console.log(`Checking badge for ${category}:`, submissionData[category]);
+        
         const result = await checkAndAwardBadge({
           userId: typeof user.id === 'string' ? parseInt(user.id) : user.id,
           milestoneName: `${category}_milestone`,
           badgeCategory: category,
-          inputValue: formData[category]
+          inputValue: submissionData[category] as number
         });
+
+        console.log(`Badge check result for ${category}:`, result);
 
         if (result && result.newBadge) {
           setBadgeInfo({ level: result.badgeLevel, category });
@@ -74,7 +100,12 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
               type="number"
               id="cardio"
               value={formData.cardio}
-              onChange={(e) => setFormData({ ...formData, cardio: parseFloat(e.target.value) })}
+              onChange={(e) => {
+                const value = e.target.value === '' ? '' : parseFloat(e.target.value);
+                setFormData({ ...formData, cardio: value });
+              }}
+              onFocus={() => handleFocus('cardio')}
+              onBlur={() => handleBlur('cardio')}
               min="0"
               step="0.1"
             />
@@ -86,7 +117,12 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
               type="number"
               id="weights"
               value={formData.weights}
-              onChange={(e) => setFormData({ ...formData, weights: parseFloat(e.target.value) })}
+              onChange={(e) => {
+                const value = e.target.value === '' ? '' : parseFloat(e.target.value);
+                setFormData({ ...formData, weights: value });
+              }}
+              onFocus={() => handleFocus('weights')}
+              onBlur={() => handleBlur('weights')}
               min="0"
               step="0.5"
             />
@@ -98,7 +134,12 @@ const FitnessForm = ({ onFormSubmit }: FitnessFormProps) => {
               type="number"
               id="calories"
               value={formData.calories}
-              onChange={(e) => setFormData({ ...formData, calories: parseInt(e.target.value) })}
+              onChange={(e) => {
+                const value = e.target.value === '' ? '' : parseInt(e.target.value);
+                setFormData({ ...formData, calories: value });
+              }}
+              onFocus={() => handleFocus('calories')}
+              onBlur={() => handleBlur('calories')}
               min="0"
             />
           </div>
