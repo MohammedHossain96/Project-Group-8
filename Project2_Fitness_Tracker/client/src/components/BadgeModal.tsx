@@ -1,11 +1,13 @@
 interface BadgeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  badgeLevel: number;
-  category: string;
+  badges: Array<{
+    badgeLevel: number;
+    category: string;
+  }>;
 }
 
-const BadgeModal = ({ isOpen, onClose, badgeLevel, category }: BadgeModalProps) => {
+const BadgeModal = ({ isOpen, onClose, badges }: BadgeModalProps) => {
   if (!isOpen) return null;
 
   const getMedal = (level: number) => {
@@ -21,11 +23,15 @@ const BadgeModal = ({ isOpen, onClose, badgeLevel, category }: BadgeModalProps) 
     <div className="modal">
       <div className="modal-content">
         <h2>Congratulations! 🎉</h2>
-        <p>You've earned a new badge!</p>
-        <div className="badge-display">
-          <span className="large-medal">{getMedal(badgeLevel)}</span>
-          <p>{category}</p>
-        </div>
+        <p>You've earned {badges.length > 1 ? 'new badges' : 'a new badge'}!</p>
+        
+        {badges.map((badge, index) => (
+          <div key={index} className="badge-display" style={{ margin: '10px 0' }}>
+            <span className="large-medal">{getMedal(badge.badgeLevel)}</span>
+            <p>{badge.category}</p>
+          </div>
+        ))}
+        
         <button onClick={onClose}>Close</button>
       </div>
     </div>
