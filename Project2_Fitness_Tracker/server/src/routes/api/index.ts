@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { userRouter } from './user-routes.js';
 import { badgeRouter } from './badge-routes.js';
 import { fitnessRouter } from './fitness-routes.js';
-//import sequelize from '../../config/connection.js';
+import sequelize from '../../config/connection.js';
 
 const router = Router();
 
