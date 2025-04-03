@@ -22,7 +22,7 @@ const BadgeModal = ({ isOpen, onClose, badges }: BadgeModalProps) => {
   return (
     <div className="modal">
       <div className="modal-content">
-        <h2>Congratulations! 🎉</h2>
+        <h3>Congratulations! 🎉</h3>
         <p>You've earned {badges.length > 1 ? 'new badges' : 'a new badge'}!</p>
         
         {badges.map((badge, index) => (
